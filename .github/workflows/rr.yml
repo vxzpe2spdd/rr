@@ -1,0 +1,22 @@
+name: rr
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: rr
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: echo "test" > 0.txt
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./0.txt
+          asset_name: "Linux 64 bit: Text"
+          tag: ${{ github.event.release.tag_name }}
